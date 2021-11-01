@@ -92,6 +92,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 		// 构造DefaultListableBeanFactory、AnnotatedBeanDefinitionReader、ClassPathBeanDefinitionScanner
 		this();
 		register(componentClasses);
+		/* spring容器启动核心方法 重要程度 5* */
 		refresh();
 	}
 
