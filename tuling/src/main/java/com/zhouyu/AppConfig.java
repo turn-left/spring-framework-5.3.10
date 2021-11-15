@@ -4,6 +4,7 @@ package com.zhouyu;
 import org.springframework.context.annotation.*;
 
 
+@EnableAspectJAutoProxy
 @ComponentScan("com.zhouyu")
 public class AppConfig {
 
