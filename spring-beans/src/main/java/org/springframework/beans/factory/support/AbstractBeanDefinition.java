@@ -146,9 +146,6 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	 */
 	public static final String INFER_METHOD = "(inferred)";
 
-	// 注意：这里beanClass为Object类型，分两阶段  ethen
-	// 1.Spring采用ASM技术读取类信息，并没有加载类，这时候beanClass属性为String类型
-	// 2.beanClass所指代的类被加载到JVM成为Class对象，这个时候为Class类型
 	@Nullable
 	private volatile Object beanClass;
 

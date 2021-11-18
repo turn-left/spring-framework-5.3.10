@@ -69,6 +69,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 		// 额外会创建StandardEnvironment
 		this.reader = new AnnotatedBeanDefinitionReader(this);
 		createAnnotatedBeanDefReader.end();
+		// 创建扫描器，扫描bean并且注册 comment by ethen 2021/11/18
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
 
