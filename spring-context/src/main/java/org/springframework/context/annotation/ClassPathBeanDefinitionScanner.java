@@ -274,9 +274,9 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 			for (BeanDefinition candidate : candidates) {
 				ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(candidate);
 				candidate.setScope(scopeMetadata.getScopeName());
-
+				// 调用BeanNameGenerator生成beanName
 				String beanName = this.beanNameGenerator.generateBeanName(candidate, this.registry);
-
+				// 给BeanDefinition对象的属性赋默认值
 				if (candidate instanceof AbstractBeanDefinition) {
 					postProcessBeanDefinition((AbstractBeanDefinition) candidate, beanName);
 				}
@@ -292,7 +292,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 							AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);
 					beanDefinitions.add(definitionHolder);
 
-					// 注册
+					// 注册 beanDefinition beanName alias[]
 					registerBeanDefinition(definitionHolder, this.registry);
 				}
 			}
@@ -310,7 +310,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 		// 设置BeanDefinition的默认值
 		beanDefinition.applyDefaults(this.beanDefinitionDefaults);
 
-		// AutowireCandidate表示某个Bean能否被用来做依赖注入
+		// AutowireCandidate表示某个Bean能否被用来做依赖注入 fixme what???
 		if (this.autowireCandidatePatterns != null) {
 			beanDefinition.setAutowireCandidate(PatternMatchUtils.simpleMatch(this.autowireCandidatePatterns, beanName));
 		}

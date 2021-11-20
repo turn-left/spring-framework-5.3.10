@@ -161,6 +161,8 @@ public abstract class BeanDefinitionReaderUtils {
 
 		// Register bean definition under primary name.
 		String beanName = definitionHolder.getBeanName();
+
+		// ×¢Òâ¼¸¸öÈÝÆ÷ beanDefinitionMap beanDefinitionNames aliasMap
 		registry.registerBeanDefinition(beanName, definitionHolder.getBeanDefinition());
 
 		// Register aliases for bean name, if any.

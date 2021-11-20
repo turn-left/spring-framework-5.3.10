@@ -432,14 +432,19 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 				}
 				if (resource.isReadable()) {
 					try {
+						// fixme 2021/11/20 分析一下 SimpleMetadataReader
 						MetadataReader metadataReader = getMetadataReaderFactory().getMetadataReader(resource);
-						// excludeFilters、includeFilters判断
+						// excludeFilters、includeFilters判断 -> TypeFilter @Conditional条件匹配
 						if (isCandidateComponent(metadataReader)) { // @Component-->includeFilters判断
+							// fixme 2021/11/20 分析一下 ScannedGenericBeanDefinition
 							ScannedGenericBeanDefinition sbd = new ScannedGenericBeanDefinition(metadataReader);
 							sbd.setSource(resource);
-
+							//1.如果不是顶级类或者静态内部类，则不通过
+							//2.如果是抽象类或者接口，则不通过
+							//3.如果是抽象的，单元@Lookup注解的方法，则通过
 							if (isCandidateComponent(sbd)) {
 								if (debugEnabled) {
+									// fixme 为什么Spring打日志前要判断一下？
 									logger.debug("Identified candidate component class: " + resource);
 								}
 								candidates.add(sbd);
@@ -503,6 +508,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 		// 符合includeFilters的会进行条件匹配，通过了才是Bean，也就是先看有没有@Component，再看是否符合@Conditional
 		for (TypeFilter tf : this.includeFilters) {
 			if (tf.match(metadataReader, getMetadataReaderFactory())) {
+				// 条件匹配 @Conditional **
 				return isConditionMatch(metadataReader);
 			}
 		}
@@ -532,7 +538,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 	 * @return whether the bean definition qualifies as a candidate component
 	 */
 	protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
-		AnnotationMetadata metadata = beanDefinition.getMetadata();
+		AnnotationMetadata metadata = beanDefinition.getMetadata(); // fixme 分析一下AnnotationMetadata since 2021/11/20
 		return (metadata.isIndependent() && (metadata.isConcrete() ||
 				(metadata.isAbstract() && metadata.hasAnnotatedMethods(Lookup.class.getName()))));
 	}
