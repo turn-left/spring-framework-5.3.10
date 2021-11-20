@@ -61,12 +61,16 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 
 
 	/**
+	 * 初始化 AnnotatedBeanDefinitionReader 并注册了几个重要的PostProcessor
+	 * 初始化 ClassPathBeanDefinitionScanner
+	 * fixme 2021/11/20
+	 *
 	 * Create a new AnnotationConfigApplicationContext that needs to be populated
 	 * through {@link #register} calls and then manually {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigApplicationContext() {
 		StartupStep createAnnotatedBeanDefReader = this.getApplicationStartup().start("spring.context.annotated-bean-reader.create");
-		// 额外会创建StandardEnvironment
+		// 额外会创建StandardEnvironment 5*
 		this.reader = new AnnotatedBeanDefinitionReader(this);
 		createAnnotatedBeanDefReader.end();
 		// 创建扫描器，扫描bean并且注册 comment by ethen 2021/11/18
@@ -91,6 +95,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... componentClasses) {
 		// 构造DefaultListableBeanFactory、AnnotatedBeanDefinitionReader、ClassPathBeanDefinitionScanner
+		// 初始化了几个默认的PostProcessor 5*
 		this();
 		register(componentClasses);
 		/* spring容器启动核心方法 重要程度 5* */

@@ -9,11 +9,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class BeanDefinitionReaderTest {
 	public static void main(String[] args) {
 		final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-//		final AnnotatedBeanDefinitionReader beanDefinitionReader = new AnnotatedBeanDefinitionReader(context);
-//		beanDefinitionReader.registerBean(UserController.class);
-//		final Object userController = context.getBean("userController");
-//		System.err.println(userController);
-//		System.err.println(context.getBeanDefinition("userController"));
+		final AnnotatedBeanDefinitionReader beanDefinitionReader = new AnnotatedBeanDefinitionReader(context);
+		beanDefinitionReader.registerBean(UserController.class);
+		final Object userController = context.getBean("userController");
+		System.err.println(userController);
+		System.err.println(context.getBeanDefinition("userController"));
 
 
 		final XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(context);

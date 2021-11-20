@@ -86,7 +86,7 @@ public class AnnotatedBeanDefinitionReader {
 		this.registry = registry;
 		// 用来解析@Conditional注解的
 		this.conditionEvaluator = new ConditionEvaluator(registry, environment, null);
-		// 注册
+		// 注册几个重要组件 5*
 		AnnotationConfigUtils.registerAnnotationConfigProcessors(this.registry);
 	}
 
